@@ -1,18 +1,12 @@
 #include <iostream>
-#include <string>
 #include "include/Pallet.hpp"
+#include "include/Employee.hpp"
 
 int main(void){
-    Pallet myPallet = Pallet("Bread", 12, 3);
-    myPallet.putOne();
+    Employee myEmployee = Employee("Michael Scott", false);
 
-    std::cout << myPallet.getItemName() << std::endl;
-    
-    while (myPallet.getItemCount() > 0) {
-        myPallet.takeOne();
-    }
-    
-    std::cout << myPallet.getItemCount() << myPallet.getItemName() << std::endl;
-    myPallet.reallocateEmptyPallet("Eggs", 16);
-    std::cout << myPallet.getRemainingSpace() << myPallet.getItemName() << std::endl;
+    std::cout << myEmployee.getName() << ", " << myEmployee.getBusy() <<  ", " << myEmployee.getForkliftCertificate() << std::endl;
+    myEmployee.setBusy(true);
+    myEmployee.setForkliftCertificate(true);
+    std::cout << myEmployee.getName() << ", " << myEmployee.getBusy() << ", "  << myEmployee.getForkliftCertificate() << std::endl;
 }

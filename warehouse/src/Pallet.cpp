@@ -3,15 +3,15 @@
 Pallet::Pallet(): Pallet("", 0, 0) {}
 Pallet::Pallet(std::string itemName, int itemCapacity, int itemCount): itemName(itemName), itemCapacity(itemCapacity), itemCount(itemCount) {}
 
-std::string Pallet::getItemName() {
+std::string Pallet::getItemName() const {
     return this->itemName;
 }
 
-int Pallet::getItemCount() {
+int Pallet::getItemCount() const {
     return this->itemCount;
 }
 
-int Pallet::getRemainingSpace() {
+int Pallet::getRemainingSpace() const {
     return this->itemCapacity - this->itemCount;
 }
 

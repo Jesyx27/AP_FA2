@@ -12,9 +12,9 @@ class Pallet {
         Pallet();
         Pallet(std::string itemName, int itemCapacity, int itemCount);
 
-        std::string getItemName();
-        int getItemCount();
-        int getRemainingSpace();
+        std::string getItemName() const;
+        int getItemCount() const;
+        int getRemainingSpace() const;
         bool reallocateEmptyPallet(std::string itemName, int itemCapacity);
         bool takeOne();
         bool putOne();

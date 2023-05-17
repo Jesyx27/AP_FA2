@@ -2,8 +2,8 @@
 #include <string>
 #include "include/Employee.hpp"
 
-Employee::Employee(): name(""), forkliftCertificate(false) {}
-Employee::Employee(std::string name, bool forkliftCertificate) {}
+Employee::Employee(): Employee("", false) {}
+Employee::Employee(std::string name, bool forkliftCertificate): name(name), forkliftCertificate(forkliftCertificate), busy(false) {}
 
 std::string Employee::getName() const {
     return this->name;
