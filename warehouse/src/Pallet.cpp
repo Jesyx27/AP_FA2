@@ -1,19 +1,17 @@
-#include "include/pallet.hpp"
-#include <string>
-#include <iostream>
+#include "include/Pallet.hpp"
 
-Pallet::Pallet(): itemName(""), itemCapacity(0), itemCount(0) {}
-Pallet::Pallet(std::string itemName, int itemCapacity, int itemCount) {}
+Pallet::Pallet(): Pallet("", 0, 0) {}
+Pallet::Pallet(std::string itemName, int itemCapacity, int itemCount): itemName(itemName), itemCapacity(itemCapacity), itemCount(itemCount) {}
 
-std::string Pallet::getItemName() const {
-    return itemName;
+std::string Pallet::getItemName() {
+    return this->itemName;
 }
 
-int Pallet::getItemCount() const {
+int Pallet::getItemCount() {
     return this->itemCount;
 }
 
-int Pallet::getRemainingSpace() const {
+int Pallet::getRemainingSpace() {
     return this->itemCapacity - this->itemCount;
 }
 
@@ -31,12 +29,15 @@ bool Pallet::takeOne() {
         return false;
     }
 
-    this->itemCount -= 1;
+    this->itemCount--;
     return true;
 }
 
 bool Pallet::putOne() {
     if (this->itemCount >= this->itemCapacity) {
-        
+        return false;
     }
+
+    this->itemCount++;
+    return true;
 }
