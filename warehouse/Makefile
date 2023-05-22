@@ -10,7 +10,7 @@ LDFLAGS =
 # Makefile settings - Can be customized.
 APPNAME = main
 EXT = .cpp
-SRCDIR = warehouse/src
+SRCDIR = src
 OBJDIR = obj
 
 TESTAPPNAME = test

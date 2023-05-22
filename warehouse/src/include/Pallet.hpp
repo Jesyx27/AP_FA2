@@ -18,4 +18,7 @@ class Pallet {
         bool reallocateEmptyPallet(std::string itemName, int itemCapacity);
         bool takeOne();
         bool putOne();
+
+        // Added to make debuggin easier
+        friend std::ostream& operator<<(std::ostream& os, const Pallet& p);
 };

@@ -1,8 +1,6 @@
 #include <iostream>
-#include <string>
 #include "include/Employee.hpp"
 
-Employee::Employee(): Employee("", false) {}
 Employee::Employee(std::string name, bool forkliftCertificate): name(name), forkliftCertificate(forkliftCertificate), busy(false) {}
 
 std::string Employee::getName() const {
