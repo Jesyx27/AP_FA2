@@ -5,7 +5,7 @@ Shelf::Shelf(): pallets() {}
 
 bool Shelf::SwapPallet(int slot, int slot2) {
     // If slot and slot2 are in range of pallets; swap them
-    if ((0 < slot < pallets.size()) && (0 < slot2 < pallets.size())) {
+    if (0 <= slot && slot < pallets.size() && 0 <= slot2 && slot2 < pallets.size()) {
         std::swap(pallets[slot], pallets[slot2]);
         return true;
     }

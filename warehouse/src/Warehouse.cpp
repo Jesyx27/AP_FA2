@@ -19,7 +19,7 @@ bool Warehouse::rearrangeShelf(Shelf& shelf) {
     // Create empty ref
     Employee* avalibleEmployee = NULL;
 
-    for (int i = 0; i < Employees.size(); i++) {
+    for (unsigned int i = 0; i < Employees.size(); i++) {
         if ((Employees[i].getForkliftCertificate() && !Employees[i].getBusy())) {
             // Assign first avalible employee to ref and break loop
             avalibleEmployee = &Employees[i];
@@ -41,14 +41,14 @@ bool Warehouse::rearrangeShelf(Shelf& shelf) {
 }
 
 bool Warehouse::pickItems(std::string itemName, int itemCount) {
-    std::vector<Pallet&> pallets = std::vector<Pallet&>();
+    std::vector<Pallet*> pallets = std::vector<Pallet*>();
     int avalibleItems = 0;
 
     for (Shelf shelf: Shelves) {
         if (!shelf.isEmpty()) {
             for (Pallet pallet: shelf.pallets) {
                 if (pallet.getItemName() == itemName && !pallet.isEmpty()) {
-                    pallets.push_back(pallet);
+                    pallets.push_back(&pallet);
                     avalibleItems += pallet.getItemCount();
                 }
             }
@@ -61,9 +61,9 @@ bool Warehouse::pickItems(std::string itemName, int itemCount) {
 
     int itemsRemaining = itemCount;
 
-    for (Pallet& p: pallets) {
-        while (itemsRemaining > 0 && !p.isEmpty()) {
-            p.takeOne();
+    for (Pallet* p: pallets) {
+        while (itemsRemaining > 0 && !p->isEmpty()) {
+            p->takeOne();
             itemsRemaining--;
         }
     }

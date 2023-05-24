@@ -1,6 +1,6 @@
 #include "include/Pallet.hpp"
 
-Pallet::Pallet(): Pallet("", -1, -1) {}
+Pallet::Pallet(): Pallet("", 0, 0) {}
 Pallet::Pallet(std::string itemName, int itemCapacity, int itemCount): itemName(itemName), itemCapacity(itemCapacity), itemCount(itemCount) {}
 
 std::string Pallet::getItemName() const {
