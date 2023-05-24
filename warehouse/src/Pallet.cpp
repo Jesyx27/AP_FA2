@@ -1,6 +1,6 @@
 #include "include/Pallet.hpp"
 
-Pallet::Pallet(): Pallet("<Empty>", 0, 0) {}
+Pallet::Pallet(): Pallet("", -1, -1) {}
 Pallet::Pallet(std::string itemName, int itemCapacity, int itemCount): itemName(itemName), itemCapacity(itemCapacity), itemCount(itemCount) {}
 
 std::string Pallet::getItemName() const {
@@ -42,7 +42,15 @@ bool Pallet::putOne() {
     return true;
 }
 
+bool Pallet::isEmpty() {
+    return (this->itemCount == 0); 
+}
+
+bool Pallet::isFull() {
+    return getRemainingSpace() == 0;
+}
+
 std::ostream& operator<<(std::ostream& os,  const Pallet& p) { 
-    os << "[" << p.getItemName() << ", " << p.getItemCount() << "/" << (p.getItemCount() + p.getRemainingSpace()) << "]";
+    os << "(" << p.getItemName() << ", " << p.getItemCount() << "/" << (p.getItemCount() + p.getRemainingSpace()) << ")";
     return os;
 }
