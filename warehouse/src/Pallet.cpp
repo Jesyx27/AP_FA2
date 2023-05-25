@@ -1,22 +1,25 @@
 #include "include/Pallet.hpp"
 
 Pallet::Pallet(): Pallet("", 0, 0) {}
-Pallet::Pallet(std::string itemName, int itemCapacity, int itemCount): itemName(itemName), itemCapacity(itemCapacity), itemCount(itemCount) {}
+// Cap itemCapacity and itemCount to 0 if smaller than it
+Pallet::Pallet(std::string itemName, unsigned int itemCapacity, unsigned int itemCount): itemName(itemName), itemCapacity(itemCapacity), itemCount(itemCount) {}
 
 std::string Pallet::getItemName() const {
     return this->itemName;
 }
 
-int Pallet::getItemCount() const {
+unsigned int Pallet::getItemCount() const {
+    // Return the item count, but multiply it by boolean wheter the count is larger than zero, (bottom limt = 0)
     return this->itemCount;
 }
 
-int Pallet::getRemainingSpace() const {
-    return this->itemCapacity - this->itemCount;
+unsigned int Pallet::getRemainingSpace() const {
+    // Return the remaining space, but multiply it by boolean wheter the resulting value is larger than zero, (bottom limt = 0)
+    return (this->itemCapacity - this->itemCount) * ((this->itemCapacity - this->itemCount) > 0);
 }
 
-bool Pallet::reallocateEmptyPallet(std::string itemName, int itemCapacity) {
-    if (this->itemCount != 0) { return false; }
+bool Pallet::reallocateEmptyPallet(std::string itemName, unsigned int itemCapacity) {
+    if (!this->isEmpty()) { return false; }
 
     this->itemName = itemName;
     this->itemCapacity = itemCapacity;
@@ -53,4 +56,8 @@ bool Pallet::isFull() {
 std::ostream& operator<<(std::ostream& os,  const Pallet& p) { 
     os << "(" << p.getItemName() << ", " << p.getItemCount() << "/" << (p.getItemCount() + p.getRemainingSpace()) << ")";
     return os;
+}
+
+bool operator==(const Pallet lhs, const Pallet rhs) {
+    return (lhs.getItemName() == rhs.getItemName()) && (lhs.getItemCount() == rhs.getItemCount()) && (lhs.getRemainingSpace() == rhs.getRemainingSpace());
 }

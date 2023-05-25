@@ -33,8 +33,23 @@ bool Warehouse::rearrangeShelf(Shelf& shelf) {
     }
 
     avalibleEmployee->setBusy(true);
-    // Sort on itemCount with lambda function
-    std::sort(shelf.pallets.begin(), shelf.pallets.end(), [](Pallet& p1, Pallet& p2){ return p1.getItemCount() > p2.getItemCount(); });
+
+    while (true) {
+        unsigned int count = 0;
+
+        for (unsigned int i = 1; i < shelf.pallets.size(); i++) {
+            if (shelf.pallets[i].getItemCount() < shelf.pallets[i - 1].getItemCount()) {
+                shelf.SwapPallet(i, i - 1);
+                break;
+            }
+            count++;
+        }
+
+        if (count == shelf.pallets.size() - 1) {
+            break;
+        }
+    }
+    
     avalibleEmployee->setBusy(false);
 
     return true;
@@ -67,4 +82,6 @@ bool Warehouse::pickItems(std::string itemName, int itemCount) {
             itemsRemaining--;
         }
     }
+
+    return true;
 }

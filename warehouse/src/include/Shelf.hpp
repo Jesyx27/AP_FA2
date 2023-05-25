@@ -8,7 +8,7 @@ class Shelf : public IContainer {
 
         Shelf();
         
-        bool SwapPallet(int slot, int slot2);
+        bool SwapPallet(unsigned int slot, unsigned int slot2);
         bool isEmpty() override;
         bool isFull() override;
 };

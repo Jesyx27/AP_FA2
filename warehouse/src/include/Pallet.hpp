@@ -5,18 +5,18 @@
 
 class Pallet : public IContainer {
     private:
-        int itemCount;
         std::string itemName;
-        int itemCapacity;
+        unsigned int itemCapacity;
+        unsigned int itemCount;
     
     public:
         Pallet();
-        Pallet(std::string itemName, int itemCapacity, int itemCount);
+        Pallet(std::string itemName, unsigned int itemCapacity, unsigned int itemCount);
 
         std::string getItemName() const;
-        int getItemCount() const;
-        int getRemainingSpace() const;
-        bool reallocateEmptyPallet(std::string itemName, int itemCapacity);
+        unsigned int getItemCount() const;
+        unsigned int getRemainingSpace() const;
+        bool reallocateEmptyPallet(std::string itemName, unsigned int itemCapacity);
         bool takeOne();
         bool putOne();
 
@@ -25,4 +25,5 @@ class Pallet : public IContainer {
 
         // Added to make debuggin easier
         friend std::ostream& operator<<(std::ostream& os, const Pallet& p);
+        friend bool operator==(const Pallet lhs, const Pallet rhs);
 };

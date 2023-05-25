@@ -1,5 +1,4 @@
 #include "include/catch.hpp"
-
 #include "../src/include/warehouse.hpp"
 #include <iostream>
 
@@ -125,6 +124,7 @@ TEST_CASE("Rearrange full shelf", "Warehouse::rearrangeShelf"){
 
     // Check if shelf is now correctly arranged.
     // Shelf should now be arranged.
+
     REQUIRE(warehouse.Shelves[0].pallets[0].getItemCount() == 10);
     REQUIRE(warehouse.Shelves[0].pallets[1].getItemCount() == 20);
     REQUIRE(warehouse.Shelves[0].pallets[2].getItemCount() == 30);

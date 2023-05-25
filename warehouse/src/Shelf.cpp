@@ -3,16 +3,17 @@
 
 Shelf::Shelf(): pallets() {}
 
-bool Shelf::SwapPallet(int slot, int slot2) {
+bool Shelf::SwapPallet(unsigned int slot, unsigned int slot2) {
     // If slot and slot2 are in range of pallets; swap them
-    if (0 <= slot && slot < pallets.size() && 0 <= slot2 && slot2 < pallets.size()) {
+    if (0 <= slot && slot < static_cast<unsigned int>(this->pallets.size()) && 0 <= slot2 && slot2 < static_cast<unsigned int>(this->pallets.size())) {
         std::swap(pallets[slot], pallets[slot2]);
         return true;
     }
+    return false;
 }
 
 bool Shelf::isEmpty() {
-    int actualSize = 0;
+    unsigned int actualSize = 0;
 
     for (Pallet p : this->pallets) {
         if (p.getItemCount() == 0) {
@@ -20,17 +21,17 @@ bool Shelf::isEmpty() {
         }
     }
 
-    return actualSize == 0;
+    return actualSize == pallets.size();
 }
 
 bool Shelf::isFull() {
-    int actualSize = 0;
+    unsigned int actualSize = 0;
 
-    for (Pallet& p : this->pallets) {
-        if (p.getItemName() == "") {
+    for (Pallet p : this->pallets) {
+        if (p.getRemainingSpace() != 0) {
             actualSize++;
         }
     }
-    
-    return actualSize == pallets.size();
+
+    return actualSize == 0;
 }
