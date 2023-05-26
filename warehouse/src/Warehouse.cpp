@@ -72,7 +72,7 @@ bool Warehouse::rearrangeShelf(Shelf& shelf) {
 /// @return Whether the opeation could succeed
 bool Warehouse::pickItems(std::string itemName, unsigned int itemCount) {
     std::vector<Pallet*> pallets = std::vector<Pallet*>();
-    int avalibleItems = 0;
+    unsigned int avalibleItems = 0;
 
     // Count the items and add Pallet* to list to take the items if enough are found
     for (unsigned int i = 0; i < this->Shelves.size(); i++) {
@@ -91,7 +91,7 @@ bool Warehouse::pickItems(std::string itemName, unsigned int itemCount) {
         return false;
     }
 
-    int itemsRemaining = itemCount;
+    unsigned int itemsRemaining = itemCount;
 
     // Take the items from the pallets
     for (unsigned int i = 0; i < pallets.size(); i++) {
@@ -110,7 +110,7 @@ bool Warehouse::pickItems(std::string itemName, unsigned int itemCount) {
 /// @return Whether the opeation could succeed
 bool Warehouse::putItems(std::string itemName, unsigned int itemCount) {
     std::vector<Pallet*> pallets = std::vector<Pallet*>();
-    int avalibleSpaces = 0;
+    unsigned int avalibleSpaces = 0;
 
     // Count the items and add Pallet* to list to take the items if enough are found
     for (unsigned int i = 0; i < Shelves.size(); i++) {
