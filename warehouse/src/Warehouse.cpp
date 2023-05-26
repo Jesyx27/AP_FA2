@@ -117,7 +117,7 @@ bool Warehouse::putItems(std::string itemName, unsigned int itemCount) {
         if (!Shelves[i].isEmpty()) {
             for (unsigned int j = 0; j < Shelves[i].pallets.size(); j++) {
                 if (Shelves[i].pallets[j].getItemName() == itemName && !Shelves[i].pallets[j].isFull()) {
-                    pallets.push_back(&Shelves[i].pallets[j]);
+                    pallets.push_back(&(Shelves[i].pallets[j]));
                     avalibleSpaces += Shelves[i].pallets[j].getRemainingSpace();
                 }
             }
@@ -132,10 +132,10 @@ bool Warehouse::putItems(std::string itemName, unsigned int itemCount) {
     int itemsRemaining = itemCount;
 
     // Take the items from the pallets
-    for (unsigned int i = 0; i< pallets.size(); i++) {
+    for (unsigned int i = 0; i < pallets.size(); i++) {
         while (itemsRemaining > 0 && !pallets[i]->isFull()) {
-            pallets[i]->takeOne();
-            itemsRemaining++;
+            pallets[i]->putOne();
+            itemsRemaining--;
         }
     }
 
