@@ -1,6 +1,6 @@
 #include "src/include/Warehouse.hpp"
 
-void test_misc() {
+void testMisc() {
     Employee myEmployee = Employee("Michael Scott", false);
 
     std::cout << myEmployee.getName() << ", " << myEmployee.getBusy() <<  ", " << myEmployee.getForkliftCertificate() << std::endl;
@@ -53,5 +53,7 @@ void testWarehouse() {
 
 int main(void){
     testWarehouse();
+    testMisc();
+    testIContainer();
     return 0;
 }
