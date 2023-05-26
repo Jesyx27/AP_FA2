@@ -98,7 +98,6 @@ TEST_CASE("Get the emptiness of a full pallet", "Pallet::isEmpty()") {
 TEST_CASE("Reallocate an empty pallet", "Pallet::reallocateEmptyPallet") {
     Pallet testPallet = Pallet("testName", 100, 0);
     
-    
     REQUIRE(testPallet.reallocateEmptyPallet("otherTestName", 30));
     REQUIRE(testPallet.isEmpty());
     REQUIRE(testPallet.getItemName() == "otherTestName");

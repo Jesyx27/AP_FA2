@@ -235,3 +235,191 @@ TEST_CASE("Rearrange shelf with quallified, but busy, employee", "Warehouse::rea
     REQUIRE(warehouse.Shelves[0].pallets[2].getItemCount() == 30);
     REQUIRE(warehouse.Shelves[0].pallets[3].getItemCount() == 10);
 }
+
+#pragma region addEmployee
+
+TEST_CASE("Test standard addition of Employees", "Warehouse::addEmployee()") {
+    Warehouse testWarehouse = Warehouse();
+    Employee testEmployee1 = Employee("Jane Doe", true);
+    Employee testEmployee2 = Employee("John Doe", true);
+
+    testWarehouse.addEmployee(testEmployee1);
+    testWarehouse.addEmployee(testEmployee2);
+
+    REQUIRE(testWarehouse.Employees[0] == testEmployee1);
+    REQUIRE(testWarehouse.Employees[1] == testEmployee2);
+    REQUIRE(testWarehouse.Employees.size() == 2);
+}
+
+TEST_CASE("Test addition of Employees that are already in the warehouse", "Warehouse::addEmployee()") {
+    Warehouse testWarehouse = Warehouse();
+    Employee testEmployee1 = Employee("Jane Doe", true);
+    Employee testEmployee2 = Employee("John Doe", true);
+
+    testWarehouse.addEmployee(testEmployee1);
+    testWarehouse.addEmployee(testEmployee2);
+    testWarehouse.addEmployee(testEmployee1);
+    testWarehouse.addEmployee(testEmployee2);
+
+    REQUIRE(testWarehouse.Employees[0] == testEmployee1);
+    REQUIRE(testWarehouse.Employees[1] == testEmployee2);
+    REQUIRE(testWarehouse.Employees.size() == 2);
+}
+
+#pragma region addShelf
+
+TEST_CASE("Test regular addition of shelf", "Warehouse::AddShelf()") {
+    Warehouse testWarehouse = Warehouse();
+    Shelf testShelf1 = Shelf();
+    Shelf testShelf2 = Shelf();
+    Pallet testPallet1 = Pallet("Suomalainen Musta Kahvi Nam Nam", 12, 12);
+    Pallet testPallet2 = Pallet("Karjalanpiirakka", 12, 3);
+    
+    testShelf1.pallets[0] = testPallet1;
+    testShelf1.pallets[1] = testPallet2;
+
+    testWarehouse.addShelf(testShelf1);
+    testWarehouse.addShelf(testShelf2);
+
+    REQUIRE(testWarehouse.Shelves.size() == 2);
+    REQUIRE(testWarehouse.Shelves[0].pallets == testShelf1.pallets);
+    REQUIRE(testWarehouse.Shelves[1].pallets == testShelf2.pallets);
+}
+
+TEST_CASE("Test addition of shelf, with twice the same pallet (should be able to)", "Warehouse::AddShelf()") {
+    Warehouse testWarehouse = Warehouse();
+    Shelf testShelf1 = Shelf();
+    Pallet testPallet1 = Pallet("Suomalainen Musta Kahvi Nam Nam", 12, 12);
+    Pallet testPallet2 = Pallet("Karjalanpiirakka", 12, 3);
+    
+    testShelf1.pallets[0] = testPallet1;
+    testShelf1.pallets[1] = testPallet2;
+
+    testWarehouse.addShelf(testShelf1);
+    testWarehouse.addShelf(testShelf1);
+
+    REQUIRE(testWarehouse.Shelves.size() == 2);
+    REQUIRE(testWarehouse.Shelves[0].pallets == testShelf1.pallets);
+    REQUIRE(testWarehouse.Shelves[1].pallets == testShelf1.pallets);
+}
+
+#pragma endregion addShelf
+
+#pragma region pickItems
+
+TEST_CASE("Testing pick items with more than enough items", "Warehouse::PickItems()") {
+    // Has 40 + 20 + 20 + 15 + 5    = 100 Books
+    // Has 10 + 20 + 30             = 60  Boxes
+    // Has 20 + 10 + 30             = 60  Toy Bears
+    Warehouse testWarehouse = createMockWarehouse();
+    
+    // Get half of items
+    REQUIRE(testWarehouse.pickItems("Books", 50));
+    REQUIRE(testWarehouse.pickItems("Boxes", 30));
+    REQUIRE(testWarehouse.pickItems("Toy Bears", 30));
+
+    // Get a quarter of items
+    REQUIRE(testWarehouse.pickItems("Books", 25));
+    REQUIRE(testWarehouse.pickItems("Boxes", 15));
+    REQUIRE(testWarehouse.pickItems("Toy Bears", 15));
+}   
+
+TEST_CASE("Testing pick items with exactly enough items", "Warehouse::PickItems()") {
+    // Has 40 + 20 + 20 + 15 + 5    = 100 Books
+    // Has 10 + 20 + 30             = 60  Boxes
+    // Has 20 + 10 + 30             = 60  Toy Bears
+    Warehouse testWarehouse = createMockWarehouse();
+    
+    // Get all items
+    REQUIRE(testWarehouse.pickItems("Books", 100));
+    REQUIRE(testWarehouse.pickItems("Boxes", 60));
+    REQUIRE(testWarehouse.pickItems("Toy Bears", 60));
+}   
+
+TEST_CASE("Testing pick items with more items than present", "Warehouse::PickItems()") {
+    // Has 40 + 20 + 20 + 15 + 5    = 100 Books
+    // Has 10 + 20 + 30             = 60  Boxes
+    // Has 20 + 10 + 30             = 60  Toy Bears
+    Warehouse testWarehouse = createMockWarehouse();
+    
+    // Get all items
+    REQUIRE(!testWarehouse.pickItems("Books", 101));
+    REQUIRE(!testWarehouse.pickItems("Boxes", 61));
+    REQUIRE(!testWarehouse.pickItems("Toy Bears", 61));
+}   
+
+TEST_CASE("Testing pick items with enough items and then not enough", "Warehouse::PickItems()") {
+    // Has 40 + 20 + 20 + 15 + 5    = 100 Books
+    // Has 10 + 20 + 30             = 60  Boxes
+    // Has 20 + 10 + 30             = 60  Toy Bears
+    Warehouse testWarehouse = createMockWarehouse();
+    
+    // Get all items
+    REQUIRE(testWarehouse.pickItems("Books", 99));
+    REQUIRE(testWarehouse.pickItems("Boxes", 59));
+    REQUIRE(testWarehouse.pickItems("Toy Bears", 59));
+
+    REQUIRE(!testWarehouse.pickItems("Books", 2));
+    REQUIRE(!testWarehouse.pickItems("Boxes", 2));
+    REQUIRE(!testWarehouse.pickItems("Toy Bears", 2));
+}   
+
+
+//////////////////////////////////////
+//      Warehouse::PutItems()       //
+//////////////////////////////////////
+
+
+TEST_CASE("Testing put items with more than enough items", "Warehouse::PickItems()") {
+    // Has (100-40) + (100-20) + (100-20) + (100-15) + (100-5)  = 400 Book Spaces
+    // Has (100-10) + (100-20) + (100-30)                       = 240  Boxes
+    // Has (100-20) + (100-10) + (100-30)                       = 240  Toy Bears
+    Warehouse testWarehouse = createMockWarehouse();
+    
+    // Put 100 items
+    REQUIRE(testWarehouse.putItems("Books", 100));
+    REQUIRE(testWarehouse.putItems("Boxes", 100));
+    REQUIRE(testWarehouse.putItems("Toy Bears", 100));
+
+    // Put 100 items once more
+    REQUIRE(testWarehouse.putItems("Books", 100));
+    REQUIRE(testWarehouse.putItems("Boxes", 100));
+    REQUIRE(testWarehouse.putItems("Toy Bears", 100));
+}   
+
+TEST_CASE("Testing put items with exactly enough items", "Warehouse::PickItems()") {
+    // Has (100-40) + (100-20) + (100-20) + (100-15) + (100-5)  = 400 Book Spaces
+    // Has (100-10) + (100-20) + (100-30)                       = 240 Boxes
+    // Has (100-20) + (100-10) + (100-30)                       = 240 Toy Bears
+    Warehouse testWarehouse = createMockWarehouse();
+    
+    REQUIRE(testWarehouse.putItems("Books", 400));
+    REQUIRE(testWarehouse.putItems("Boxes", 240));
+    REQUIRE(testWarehouse.putItems("Toy Bears", 240));
+}   
+
+TEST_CASE("Testing put items with more items than present", "Warehouse::PickItems()") {
+    // Has (100-40) + (100-20) + (100-20) + (100-15) + (100-5)  = 400 Book Spaces
+    // Has (100-10) + (100-20) + (100-30)                       = 240 Boxes
+    // Has (100-20) + (100-10) + (100-30)                       = 240 Toy Bears
+    Warehouse testWarehouse = createMockWarehouse();
+    
+    REQUIRE(!testWarehouse.putItems("Books", 401));
+    REQUIRE(!testWarehouse.putItems("Boxes", 241));
+    REQUIRE(!testWarehouse.putItems("Toy Bears", 241));
+}   
+
+TEST_CASE("Testing put items with enough items and then not enough", "Warehouse::PickItems()") {
+    // Has (100-40) + (100-20) + (100-20) + (100-15) + (100-5)  = 400 Book Spaces
+    // Has (100-10) + (100-20) + (100-30)                       = 240 Boxes
+    // Has (100-20) + (100-10) + (100-30)                       = 240 Toy Bears
+    Warehouse testWarehouse = createMockWarehouse();
+    
+    REQUIRE(testWarehouse.putItems("Books", 399));
+    REQUIRE(testWarehouse.putItems("Boxes", 239));
+    REQUIRE(testWarehouse.putItems("Toy Bears", 239));
+
+    REQUIRE(!testWarehouse.putItems("Books", 2));
+    REQUIRE(!testWarehouse.putItems("Boxes", 2));
+    REQUIRE(!testWarehouse.putItems("Toy Bears", 2));
+}   

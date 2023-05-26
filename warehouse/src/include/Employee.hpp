@@ -9,7 +9,6 @@ class Employee {
         bool forkliftCertificate;
 
     public:
-        Employee();
         Employee(std::string name, bool forkliftCertificate);
 
         std::string getName() const;
