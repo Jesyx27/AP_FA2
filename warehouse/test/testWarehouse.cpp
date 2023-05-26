@@ -236,7 +236,9 @@ TEST_CASE("Rearrange shelf with quallified, but busy, employee", "Warehouse::rea
     REQUIRE(warehouse.Shelves[0].pallets[3].getItemCount() == 10);
 }
 
-#pragma region addEmployee
+///////////////////////////////////////
+//      Warehouse::addEmployee()     //
+///////////////////////////////////////
 
 TEST_CASE("Test standard addition of Employees", "Warehouse::addEmployee()") {
     Warehouse testWarehouse = Warehouse();
@@ -266,7 +268,9 @@ TEST_CASE("Test addition of Employees that are already in the warehouse", "Wareh
     REQUIRE(testWarehouse.Employees.size() == 2);
 }
 
-#pragma region addShelf
+////////////////////////////////////
+//      Warehouse::addShelf()     //
+////////////////////////////////////
 
 TEST_CASE("Test regular addition of shelf", "Warehouse::AddShelf()") {
     Warehouse testWarehouse = Warehouse();
@@ -303,11 +307,11 @@ TEST_CASE("Test addition of shelf, with twice the same pallet (should be able to
     REQUIRE(testWarehouse.Shelves[1].pallets == testShelf1.pallets);
 }
 
-#pragma endregion addShelf
+/////////////////////////////////////
+//      Warehouse::pickItems()     //
+/////////////////////////////////////
 
-#pragma region pickItems
-
-TEST_CASE("Testing pick items with more than enough items", "Warehouse::PickItems()") {
+TEST_CASE("Testing pick items with more than enough items", "Warehouse::pickItems()") {
     // Has 40 + 20 + 20 + 15 + 5    = 100 Books
     // Has 10 + 20 + 30             = 60  Boxes
     // Has 20 + 10 + 30             = 60  Toy Bears
