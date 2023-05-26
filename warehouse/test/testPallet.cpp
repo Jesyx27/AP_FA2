@@ -1,9 +1,11 @@
 #include "include/catch.hpp"
 #include "../src/include/Shelf.hpp"
 
-#pragma region getItemCount
+/////////////////////////////////////
+//      Pallet::GetItemCount()     //
+/////////////////////////////////////
 
-TEST_CASE("Get Pallet Name", "Pallet.getItemCount()") {
+TEST_CASE("Get Pallet Name", "Pallet::getItemCount()") {
     // Create a pallet and test whether the name is accesible
     Pallet testPallet = Pallet("testName", 12, 3);
     REQUIRE(testPallet.getItemName() == "testName");
@@ -27,9 +29,9 @@ TEST_CASE("Get item count of standard construction", "Shelf::pallets[0].getItemC
     REQUIRE(testShelf.pallets[0].getItemCount() == 0);
 }
 
-#pragma endregion getItemCount
-
-#pragma region getRemainingSpace
+//////////////////////////////////////////
+//      Pallet::GetRemainingSpace()     //
+//////////////////////////////////////////
 
 TEST_CASE("Get the remaining space, regular", "Pallet::getRemainingSpace") {
     // Test regualar behavior for remaining space
@@ -43,9 +45,9 @@ TEST_CASE("Get the remaining space of (empty) standard construction (0-0)", "She
     REQUIRE(testShelf.pallets[0].getRemainingSpace() == 0);
 }
 
-#pragma endregion getRemainingSpace
-
-#pragma region IContainer
+/////////////////////////
+//      IContainer     //
+/////////////////////////
 
 TEST_CASE("Get the full/ emptiness of an pallet with zero space", "Pallet::isFull(), Pallet::isEmpty()") {
     
@@ -91,9 +93,9 @@ TEST_CASE("Get the emptiness of a full pallet", "Pallet::isEmpty()") {
     REQUIRE(!testPallet.isEmpty());
 }
 
-#pragma endregion IContainer
-
-#pragma region reallocateEmptyPallet
+//////////////////////////////////////////////
+//      Pallet::reallocateEmptyPallet()     //
+//////////////////////////////////////////////
 
 TEST_CASE("Reallocate an empty pallet", "Pallet::reallocateEmptyPallet") {
     Pallet testPallet = Pallet("testName", 100, 0);
@@ -113,7 +115,9 @@ TEST_CASE("Reallocate a non-empty pallet", "Pallet::reallocateEmptyPallet") {
     REQUIRE(testPallet.getRemainingSpace() == 100 - 50);
 }
 
-#pragma region takeOne
+///////////////////////////////
+//      Pallet::TakeOne()     //
+///////////////////////////////
 
 TEST_CASE("Take Item off of a semi-full Pallet", "Pallet::takeOne()") {
     Pallet testPallet1 = Pallet("testName1", 100, 10);
@@ -141,9 +145,9 @@ TEST_CASE("Try taking an Item off of an empty Pallet", "Pallet::takeOne()") {
     REQUIRE(testPallet2.getItemCount() == 0);
 }
 
-#pragma endregion takeOne
-
-#pragma region putOne
+///////////////////////////////
+//      Pallet::PutOne()     //
+///////////////////////////////
 
 TEST_CASE("Try putting an item on a semi-full pallet", "Pallet::putOne()") {
     Pallet testPallet1 = Pallet("testName1", 100, 10);

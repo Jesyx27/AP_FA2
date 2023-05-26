@@ -1,7 +1,9 @@
 #include "include/catch.hpp"
 #include "../src/include/Shelf.hpp"
 
-#pragma region pallets
+/////////////////////////////
+//      Shelf::pallets     //
+/////////////////////////////
 
 /// @brief 
 /// Creates a mock shelf for testing Shelf::pallets functionality
@@ -79,11 +81,11 @@ TEST_CASE("Test wether empty pallet works (add 4 empty pallets to pallets)", "Sh
     REQUIRE(testShelf.pallets[3].isEmpty());
 }
 
-#pragma endregion pallets
+///////////////////////////////////
+//      Shelf::swapPallets()     //
+///////////////////////////////////
 
-#pragma region swapPallet
-
-TEST_CASE("Normal Behavior Swap Pallets", "Shelf::swapPallet()") {
+TEST_CASE("Normal Behavior Swap Pallets", "Shelf::swapPallets()") {
     Shelf testShelf = createMockShelf(4, 10, 5);
     Shelf compareShelf = createMockShelf(4, 10, 5);
 

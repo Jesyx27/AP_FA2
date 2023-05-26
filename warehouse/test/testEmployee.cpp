@@ -1,7 +1,9 @@
 #include "include/catch.hpp"
 #include "../src/include/Employee.hpp"
 
-#pragma region get-Functions
+////////////////////////////
+//      Get Functions     //
+////////////////////////////
 
 TEST_CASE("Test name getting for default constructor", "Employee::getName()") {
     Employee testEmployee1 = Employee("John Doe", false);
@@ -25,9 +27,9 @@ TEST_CASE("Test busy getting for default constructor", "Employee::getBusy()") {
     REQUIRE(!testEmployee.getBusy());
 }
 
-#pragma endregion get-Functions
-
-#pragma region set-Functions
+////////////////////////////
+//      Set Functions     //
+////////////////////////////
 
 TEST_CASE("Test forklift certificate setting and getting for default constructor", "Employee::getForkliftCertificate()") {
     Employee testEmployee1 = Employee("John Doe", false);
